@@ -1,9 +1,6 @@
 package game;
 
-import base.Background;
-import base.Enemy;
-import base.Player;
-import base.PlayerBullet;
+import base.*;
 
 
 import javax.swing.*;
@@ -15,30 +12,19 @@ public class GameCanvas extends JPanel {
     Player player;
 
 
-    //tạo araylist lưu enamies
-    public static ArrayList<Enemy> enemies;
-    public static ArrayList<PlayerBullet> playerBullets;
-
     public GameCanvas() {
-        this.background = new Background();
-        this.player = new Player();
+        this.background = GameObject.create(Background.class);
+        this.player = GameObject.create(Player.class);
 
-        // homework
-        enemies = new ArrayList<Enemy>();
-        playerBullets = new ArrayList<PlayerBullet>();
+        Enemy enemy = GameObject.create(Enemy.class);
     }
 
     public void run() {
-        background.run();
-        player.run();
+       GameObject.runAll();
     }
 
     public void render(Graphics g) {
-        background.render(g);
-        player.render(g);
-        for(Enemy enemy : enemies){
-            enemy.render(g);
-        }
+        GameObject.renderAll(g);
     }
 
     @Override

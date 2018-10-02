@@ -1,5 +1,6 @@
 package game;
 
+import base.GameObject;
 import base.KeyEventPress;
 import base.Settings;
 import game.GameCanvas;
@@ -36,6 +37,8 @@ public class GameWindow extends JFrame {
                     KeyEventPress.isRightPress = true;
                 }else if(e.getKeyCode() == KeyEvent.VK_A){
                     KeyEventPress.isLeftPress = true;
+                }else if(e.getKeyCode() == KeyEvent.VK_SPACE){
+                    KeyEventPress.isFirePress = true;
                 }
             }
 
@@ -49,13 +52,15 @@ public class GameWindow extends JFrame {
                     KeyEventPress.isRightPress = false;
                 }else if(e.getKeyCode() == KeyEvent.VK_A){
                     KeyEventPress.isLeftPress = false;
+                }else if (e.getKeyCode() == KeyEvent.VK_SPACE){
+                    KeyEventPress.isFirePress = false;
                 }
             }
         });
     }
 
     //vòng lặp game suốt quá trình game chạy
-    void gameLoop() {
+   public void gameLoop() {
         long delay = 1000 / 60;
         long lastTime = 0;
         while(true) {

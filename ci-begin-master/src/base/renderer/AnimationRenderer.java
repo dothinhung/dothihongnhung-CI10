@@ -1,6 +1,7 @@
 package base.renderer;
 
 import base.GameObject;
+import base.counter.FrameCounter;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -11,10 +12,16 @@ public class AnimationRenderer extends Renderer {
 
     ArrayList<BufferedImage> images;
     int currentImage = 0;
-    int frameCount = 0;
+    FrameCounter frameCount;
 
     public AnimationRenderer(ArrayList<BufferedImage> images){
         this.images = images;
+        this.frameCount = new FrameCounter(5);
+    }
+
+    public AnimationRenderer(ArrayList<BufferedImage> images, int frameCount){
+        this.images = images;
+        this.frameCount = new FrameCounter(5);
     }
 
     @Override
@@ -24,14 +31,12 @@ public class AnimationRenderer extends Renderer {
                     (int)master.position.x,
                     (int)master.position.y,
                     null);
-            if(frameCount > 5){
+            if(this.frameCount.run()){
                 currentImage++;
                 if(currentImage >= images.size() - 1){
                     currentImage =0;
             }
-            frameCount = 0;
-            }else {
-                frameCount++;
+            this.frameCount.reset();
             }
         }
     }
