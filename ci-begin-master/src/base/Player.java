@@ -12,9 +12,11 @@ import tklibs.SpriteUtils;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-public class Player extends GameObject {
+public class Player extends GameObject implements Physics{
     boolean isValidFire;
     FrameCounter fireCounter;
+    BoxCollider collider;
+    int hp;
     public Player() {
         super();
         ArrayList<BufferedImage> images = SpriteUtils.loadimages("assets/images/players/straight/0.png",
@@ -29,7 +31,9 @@ public class Player extends GameObject {
         this.renderer = new AnimationRenderer(images);
         this.position = new Vector2D(Settings.SCREEN_PLAYER_POSITION_X, Settings.SCREEN_PLAYER_POSITION_Y);
 //        this.isValidFire = true;
-        this.fireCounter = new FrameCounter(10);
+        this.fireCounter = new FrameCounter(20);
+        this.collider = new BoxCollider(32,48);
+        this.hp = 20;
     }
 
     @Override
@@ -75,5 +79,19 @@ public class Player extends GameObject {
     public void move(int translateX, int translateY) {
 
         this.position.addThis(translateX,translateY);
+    }
+
+    public void takeDamage(int damage) {
+        this.hp -= damage;
+        if(this.hp <= 0){
+//            this.isActive = false;
+            this.destroy();
+            hp = 0;
+        }
+    }
+
+    @Override
+    public BoxCollider getBoxCollider() {
+        return this.collider;
     }
 }

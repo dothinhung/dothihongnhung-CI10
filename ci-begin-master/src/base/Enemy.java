@@ -36,7 +36,7 @@ public class Enemy extends GameObject implements Physics{
 
 //        bullet.position.set(this.position.x, this.position.y);
 //        bullet1.position.set(this.position.x, this.position.y);
-        bullet2.position.set(this.position.x, this.position.y);
+        bullet2.position.set(this.position.x, this.position.y +5);
 
 
         this.fireCounter.reset();

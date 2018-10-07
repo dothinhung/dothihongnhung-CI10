@@ -76,8 +76,9 @@ public class GameObject {
     }
 
     public static void renderAll(Graphics g){
-        for(GameObject go : gameObjects){
-            go.render(g);
+//        for(GameObject go : gameObjects){
+        for (int i = 0; i < gameObjects.size(); i++){
+            GameObject go.render(g);
             if(go.isActive){
                 go.run();
             }

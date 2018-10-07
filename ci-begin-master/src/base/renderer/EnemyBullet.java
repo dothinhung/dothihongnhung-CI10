@@ -4,6 +4,7 @@ import base.renderer.AnimationRenderer;
 import tklibs.SpriteUtils;
 
 import javax.swing.*;
+import javax.xml.stream.FactoryConfigurationError;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ public class EnemyBullet extends GameObject implements Physics {
     Vector2D velocity;
     BoxCollider collider;
     ArrayList<BufferedImage> images;
+    int damage;
     public EnemyBullet(){
         super();
 //        ArrayList<BufferedImage> images = SpriteUtils.loadImages(
@@ -25,9 +27,10 @@ public class EnemyBullet extends GameObject implements Physics {
                 "assets/images/enemies/bullets/yellow.png"
         );
         this.renderer = new AnimationRenderer(images);
-        this.position = new Vector2D(0,0);
+        this.position = new Vector2D(0,0); //vị trí
         this.velocity = new Vector2D(0,0);
         this.collider = new BoxCollider(16,16);
+        this.damage = 4;
     }
 
     @Override
@@ -36,7 +39,8 @@ public class EnemyBullet extends GameObject implements Physics {
         Player player = GameObject .interesct(Player.class, this);
 
         if(player != null){
-            System.out.println("GAME OVER");
+//            System.out.println("GAME OVER");
+            player.takeDamage(this.damage);
             this.destroy();
 
             player.destroy();
@@ -48,6 +52,10 @@ public class EnemyBullet extends GameObject implements Physics {
             return;
         }
         this.position.addThis(velocity.x, velocity.y);
+    }
+
+    public void takeDamage(int damage){
+        this.damage = damage;
     }
 
     @Override
