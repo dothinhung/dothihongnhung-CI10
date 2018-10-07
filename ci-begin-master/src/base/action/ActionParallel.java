@@ -7,20 +7,32 @@ import java.util.Arrays;
 
 public class ActionParallel extends Action {
     ArrayList<Action> actions;
-    public ActionParallel(Action... actions){
+
+    public ActionParallel(Action... actions) {
         this.actions = new ArrayList<>(Arrays.asList(actions));
     }
 
-    public void run(GameObject master){
-        if (this.actions.size()>0 && !this.isDone){
-            boolean check = true;
+    @Override
+    public void run(GameObject master) {
+        if(this.actions.size() > 0
+            && !this.isDone) {
+            boolean isContinue = true;
             for (Action action : actions) {
-                if (!action.isDone) {
+                if(!action.isDone) {
                     action.run(master);
-                }else {
-                    check = false;
+                } else {
+                    isContinue = false;
                 }
             }
+            this.isDone = !isContinue;
         }
+    }
+
+    @Override
+    public void reset() {
+        for(Action action: actions) {
+            action.reset();
+        }
+        this.isDone = false;
     }
 }

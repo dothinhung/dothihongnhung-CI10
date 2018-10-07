@@ -1,4 +1,6 @@
-package base;
+package base.physics;
+
+import base.GameObject;
 
 public class BoxCollider {
     public int width;
@@ -26,20 +28,8 @@ public class BoxCollider {
     }
 
     public boolean intersect(Physics other, GameObject master){
-//        //oM = otherMaster
-//        //oB = otherBoxCollider
-//        GameObject oM = (GameObject) other;
-//        BoxCollider oB = other.getBoxCollider();
-//
-//        boolean yIntersect = (this.top(master) >=  oB.top(oM) && this.top(master) < oB.bot(oM)) ||
-//                (this.bot(master) >= oB.top(oM) && this.bot(master) < oB.bot(oM));
-//
-//        boolean xIntersect = (this.right(master) >= oB.left(oM) && this.right(master) < oB.right(oM)) ||
-//                (this.left(master) >= oB.left(oM) && this.left(master) < oB.right(oM));
-//
-//
-//        return yIntersect && xIntersect;
-
+        // oM == other
+        // oB == other BoxCollider
         GameObject oM = (GameObject) other;
         BoxCollider oB = other.getBoxCollider();
         boolean yIntersect = ((this.top(master) >= oB.top(oM) && this.top(master) <= oB.bot(oM))

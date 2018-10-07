@@ -1,11 +1,12 @@
-package base;
+package base.enemy;
 
+import base.*;
+import base.physics.BoxCollider;
+import base.physics.Physics;
+import base.player.Player;
 import base.renderer.AnimationRenderer;
 import tklibs.SpriteUtils;
 
-import javax.swing.*;
-import javax.xml.stream.FactoryConfigurationError;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -36,7 +37,7 @@ public class EnemyBullet extends GameObject implements Physics {
     @Override
     public void run() {
 //        Player player = GameObject.intersect(Player.class, this);
-        Player player = GameObject .interesct(Player.class, this);
+        Player player = GameObject.interesct(Player.class, this);
 
         if(player != null){
 //            System.out.println("GAME OVER");

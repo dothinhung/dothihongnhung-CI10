@@ -1,18 +1,20 @@
-package base;
+package base.player;
 
+import base.*;
 import base.bulletDirection.LeftBullet;
 import base.bulletDirection.RightBullet;
 import base.bulletDirection.StraightBullet;
 import base.counter.FrameCounter;
+import base.event.KeyEventPress;
+import base.physics.BoxCollider;
+import base.physics.Physics;
 import base.renderer.AnimationRenderer;
-import base.renderer.SingleImageRenderer;
-import game.GameCanvas;
 import tklibs.SpriteUtils;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-public class Player extends GameObject implements Physics{
+public class Player extends GameObject implements Physics {
     boolean isValidFire;
     FrameCounter fireCounter;
     BoxCollider collider;

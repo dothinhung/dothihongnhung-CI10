@@ -1,6 +1,6 @@
 package base.bulletDirection;
 
-import base.PlayerBullet;
+import base.player.PlayerBullet;
 import base.Vector2D;
 import base.renderer.SingleImageRenderer;
 import tklibs.SpriteUtils;

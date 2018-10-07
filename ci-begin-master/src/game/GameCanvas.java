@@ -1,11 +1,12 @@
 package game;
 
 import base.*;
+import base.enemy.Enemy;
+import base.player.Player;
 
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 
 public class GameCanvas extends JPanel {
     Background background;
