@@ -40,4 +40,9 @@ public class AnimationRenderer extends Renderer {
             }
         }
     }
+    public static class EnemyBullet extends GameObject{
+        public EnemyBullet(){
+
+        }
+    }
 }

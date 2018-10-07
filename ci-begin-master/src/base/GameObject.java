@@ -4,6 +4,7 @@ import base.renderer.Renderer;
 import game.GameCanvas;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class GameObject {
@@ -26,10 +27,48 @@ public class GameObject {
         }
     }
 
-    public static void runAll(){
-        for(GameObject go : gameObjects) {
-            go.run();
+    public static <E extends GameObject> E recycle(Class<E> childclass){
+        //Kiểm tra có gameobject thỏa mã y/c (isActive = false && go instanceof childclass )không
+        //- có thì dùng lại
+        //-Không có thì tạo mới
+        //2. Trả về gameobject
+        for(GameObject go: gameObjects){
+            if(!go.isActive && go.getClass().isAssignableFrom(childclass)){
+                go.isActive = true;
+                return (E) go;
+            }
         }
+        return create(childclass);
+
+    }
+
+    // kiểm tra 1 object truyền vào có va chạm vs bất kì object nào trong game hay k
+    public static <E extends GameObject> E interesct(Class<E> childclass, Physics physics) {
+        for (GameObject go : gameObjects) {
+            if (go.isActive && go.getClass().isAssignableFrom(childclass) && go instanceof Physics) {
+                Physics physicsGo = (Physics) go;
+                boolean intersected = physics.getBoxCollider().intersect(physicsGo, (GameObject) physics);
+
+                if (intersected) {
+                    return (E) physicsGo;
+                }
+
+            }
+        }
+        return null;
+    }
+
+
+    public static void runAll(){
+//        for(GameObject go : gameObjects) {
+//            go.run();
+        for (int i = 0; i < gameObjects.size(); i++){
+            GameObject go = gameObjects.get(i);
+            if(go.isActive) {
+                go.run();
+            }
+        }
+        System.out.println(gameObjects.size());
     }
 
     public static void addNewAll(){
@@ -39,6 +78,9 @@ public class GameObject {
     public static void renderAll(Graphics g){
         for(GameObject go : gameObjects){
             go.render(g);
+            if(go.isActive){
+                go.run();
+            }
         }
         gameObjects.addAll(newGameObjects);
         newGameObjects.clear();
@@ -47,12 +89,23 @@ public class GameObject {
 
     public Renderer renderer;
     public Vector2D position;
+    public boolean isActive;
 
+    public GameObject(){
+        this.isActive = true;
+    }
 
-    public GameObject() {}
+    public GameObject(BufferedImage image) {
+        this.isActive = true;
+        this.position = new Vector2D(0,0);
+    }
 
     public void run() { //chạy game logic
 
+    }
+
+    public void destroy(){
+        this.isActive = false;
     }
 
     public void render(Graphics g) { //chạy game hiển thị
