@@ -1,10 +1,7 @@
 package base.enemy;
 
 import base.*;
-import base.action.Action;
-import base.action.ActionRepeat;
-import base.action.ActionSequence;
-import base.action.ActionWait;
+import base.action.*;
 import base.counter.FrameCounter;
 import base.physics.BoxCollider;
 import base.physics.Physics;
@@ -46,39 +43,50 @@ public class Enemy extends GameObject implements Physics {
                 this.isDone = false;
             }
         };
-        ActionSequence actionSequence = new ActionSequence(actionWait, actionFire);
+
+        Action actionLeft = new Action() {
+            @Override
+            public void run(GameObject master) {
+                if(position.x>9) {
+                    position.addThis(-6, 5);
+
+                }
+                this.isDone=true;
+            }
+
+            @Override
+            public void reset() {
+                this.isDone=false;
+
+            }
+        };
+
+
+
+        ActionParallel actionParallel = new ActionParallel(actionLeft, actionFire);
+
+        ActionSequence actionSequence = new ActionSequence(actionWait,actionParallel);
+
         ActionRepeat actionRepeat = new ActionRepeat(actionSequence);
+
+
         this.action = actionRepeat;
+
     }
 
     public void fire(){
-//        EnemyBullet bullet = GameObject.recycle(EnemyBullet.class);
-//        EnemyBullet bullet1 = GameObject.recycle(EnemyBullet.class);
+
         EnemyBullet bullet2 = GameObject.recycle(EnemyBullet.class);
 
-
-
-//        bullet.velocity.set(1,0);
-//        bullet1.velocity.set(1,-1);
         bullet2.velocity.set(0,1);
 
-//        bullet.position.set(this.position.x, this.position.y);
-//        bullet1.position.set(this.position.x, this.position.y);
         bullet2.position.set(this.position.x, this.position.y +5);
 
-
-//        this.fireCounter.reset();
 
     }
 
     @Override
     public void run() {
-//        this.position.y ++;
-//        boolean fireCounterRun = this.fireCounter.run();
-//        if(fireCounterRun){
-//            this.fire();
-//            this.fireCounter.reset();
-//        }
         this.action.run(this);
     }
 
